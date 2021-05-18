@@ -14,3 +14,7 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.rc-tree .rc-tree-treenode .rc-tree-node-content-wrapper {
+  height: auto !important;
+}

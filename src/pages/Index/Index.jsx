@@ -8,6 +8,7 @@ import Tree, { TreeNode } from 'rc-tree';
 import 'rc-tree/assets/index.css';
 import templates from "../../components/templates";
 import Preview from './Preview';
+import * as antd from 'antd';
 
 
 export default class Index extends React.Component {
@@ -173,7 +174,10 @@ export default class Index extends React.Component {
                     }
                 }
             })
-
+            let textChildren;
+            if (tempEle.property.find(item=>item.key === 'text')) {
+                textChildren = normalProperty['text'] || 'text';
+            }
             if (tempEle.userCustom) {
                 if (item.tag === 'PicView') {
                     ele = <PicView
@@ -185,9 +189,30 @@ export default class Index extends React.Component {
                         onDragOver={e=>e.preventDefault()}
                     />
                 }
+                if (tempEle.libName === 'antd'){
+                    let Component = antd[tempEle.libKey];
+                    if (textChildren) {
+                        ele = <Component 
+                            key={item.id}
+                            style={styleProperty}
+                            {...item}
+                            {...normalProperty}
+                            onClick={(e)=>this.selectTargetElement(e, item)}
+                            onDragOver={e=>e.preventDefault()}
+                            >{textChildren}</Component>
+                    } else {
+                        ele = <Component 
+                            key={item.id}
+                            style={styleProperty}
+                            {...item}
+                            {...normalProperty}
+                            onClick={(e)=>this.selectTargetElement(e, item)}
+                            onDragOver={e=>e.preventDefault()} />
+                    }
+                } 
             } else {
-                if (normalProperty['text']) {
-                    children = <>{normalProperty['text']}{children}</>
+                if (textChildren) {
+                    children = <>{textChildren}{children}</>
                 }
                 ele = React.createElement(item.tag, {
                     ...item,
@@ -250,6 +275,7 @@ export default class Index extends React.Component {
                 </div>
                 <div style={{flex: 1}}>
                     <Tree
+                        showIcon={false}
                         onDrop={this.onDropTreeNode}
                         draggable={true}
                         onSelect={(_, { node: { data }, nativeEvent })=>this.selectTargetElement(nativeEvent, data)} >
@@ -257,7 +283,7 @@ export default class Index extends React.Component {
                     </Tree>
                 </div>
                 <div style={{width: device, border: '1px solid red'}}>
-                    <Preview data={mockData} elementList={eleList} />
+                    <Preview elementList={eleList} />
                 </div>
             </div>
 
@@ -291,13 +317,5 @@ export default class Index extends React.Component {
                 ...this.state.eleList.slice(i+1),
             ]
         }, this.autoSaveLocalData);
-    }
-}
-
-
-const mockData = {
-    banner: {
-        title: "abc",
-        sloganImg: "https://fs.zto.com/fs1/M00/06/DE/wKhBFlnve0eAX4MgAACafKWUh8o985.png?width=48"
     }
 }

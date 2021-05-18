@@ -3,10 +3,11 @@ import { getPlaceVal, menusToTree } from '../../utils/utils';
 import templates from "../../components/templates";
 import PicView from "../../components/PicView";
 import './base.css';
+import * as antd from 'antd';
 
 export default class Preview extends React.PureComponent {
     render() {
-        const { data, elementList } = this.props;
+        const { elementList } = this.props;
         let elements = menusToTree(elementList);
         const loop = (data) => data.map((item) => {
             let children;
@@ -43,6 +44,23 @@ export default class Preview extends React.PureComponent {
                         style={styleProperty}
                     />
                 }
+                if (tempEle.libName === 'antd'){
+                    let Component = antd[tempEle.libKey];
+                    if (normalProperty['text']) {
+                        ele = <Component 
+                            key={item.id} 
+                            style={styleProperty}
+                            {...item}
+                            {...normalProperty}
+                            >{normalProperty['text']}</Component>
+                    } else {
+                        ele = <Component 
+                            key={item.id}
+                            style={styleProperty}
+                            {...item}
+                            {...normalProperty} />
+                    }
+                } 
             } else {
                 if (normalProperty['text']) {
                     children = <>{normalProperty['text']}{children}</>

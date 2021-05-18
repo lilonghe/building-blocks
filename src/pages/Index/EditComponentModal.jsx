@@ -23,16 +23,16 @@ export default class EditComponentModal extends React.Component {
         let styleProperty = template.property.filter(item=>item.type==='style');
         let normalProperty = template.property.filter(item=>!item.type);
         return <Drawer
-            title={'修改属性 - '+ template.title}
+            title={<div>
+                {'修改属性 - '+ template.title}
+                <Popconfirm title={'确认删除?'} onConfirm={()=>delEle(id)}>
+                    <Button style={{marginLeft: 10}} type='dashed' danger>删除</Button>
+                </Popconfirm>
+            </div>}
             width={600}
             visible={visible}
             destroyOnClose={true}
             onClose={onClose}>
-            <div className={style.formGroup} style={{textAlign: 'right'}}>
-                <Popconfirm title={'确认删除?'} onConfirm={()=>delEle(id)}>
-                    <Button type='dashed' danger>删除</Button>
-                </Popconfirm>
-            </div>
             <Tabs defaultActiveKey={'property'}>
                 {normalProperty.length > 0 && <Tabs.TabPane tab={'属性'} key={'property'}>
                     <div>

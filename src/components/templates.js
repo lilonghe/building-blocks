@@ -10,7 +10,22 @@ usuallyStyleProperty.map((item,i)=>usuallyStyleProperty[i].type = 'style');
 
 let textProperty = { key: 'text', label: '文本' };
 let valueProperty = { key: 'value', label: '内容' };
-let placeholderProperty = { key: 'placeholder', label:'占位符' }
+let placeholderProperty = { key: 'placeholder', label:'占位符' };
+
+const antdTemplates = [
+    {
+        tag: 'antd.Button', title: 'ANTD 按钮', finalTag: true, userCustom: true, 
+        libKey: 'Button',
+        libName: 'antd',
+        property: [
+            textProperty,
+            ...usuallyStyleProperty,
+            {
+                label: '类型', key: 'type', options: ['primary', 'ghost', 'dashed', 'link', 'text', 'default'],
+            }
+        ],
+    }
+];
 
 const templates = [
     {tag: 'div', title: '容器', property: [...usuallyStyleProperty]},
@@ -29,6 +44,7 @@ const templates = [
             {key: 'src', label:'图片地址'},
             {key: 'title', label:'图片介绍'},
             ...usuallyStyleProperty
-    ]}
+    ]},
+    ...antdTemplates,
 ];
 export default templates;
