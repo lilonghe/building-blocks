@@ -3,7 +3,7 @@ import React from 'react';
 export default class PicView extends React.Component {
     render() {
         const {
-            src='https://fs.zto.com/fs1/M00/06/DE/wKhBFlnve0eAX4MgAACafKWUh8o985.png?width=48',
+            src='',
             title,
             style={},
             ...rest

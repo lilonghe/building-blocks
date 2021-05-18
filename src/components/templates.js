@@ -25,7 +25,7 @@ const templates = [
         textProperty,
         ...usuallyStyleProperty
     ]},
-    {tag: 'PicView', title:'PicView', finalTag: true, userCustom: true, property: [
+    {tag: 'PicView', title:'图片', finalTag: true, userCustom: true, property: [
             {key: 'src', label:'图片地址'},
             {key: 'title', label:'图片介绍'},
             ...usuallyStyleProperty
